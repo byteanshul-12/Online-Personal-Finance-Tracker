@@ -3,15 +3,14 @@ package com.finance.dao;
 import com.finance.DBConnection;
 import com.finance.exception.DatabaseException;
 import com.finance.model.Expense;
-
 import java.math.BigDecimal;
 import java.sql.Connection;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -274,5 +273,76 @@ public class ExpenseDAO {
         expense.setDate(rs.getDate("date"));
         expense.setUserId(rs.getString("user_id"));
         return expense;
+    }
+    /**
+     * Returns total expenditure grouped by category for a user, sorted highest to lowest.
+     */
+    public Map<String, BigDecimal> getCategorySpendingTotals(String userId) throws DatabaseException {
+        Map<String, BigDecimal> totals = new LinkedHashMap<>();
+
+        String sql = "SELECT COALESCE(NULLIF(TRIM(category), ''), 'Uncategorized') AS category_label, "
+                   + "SUM(amount) AS total_amount "
+                   + "FROM EXPENSES "
+                   + "WHERE user_id = ? "
+                   + "GROUP BY category_label "
+                   + "ORDER BY total_amount DESC";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, userId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String label = rs.getString("category_label");
+                    BigDecimal amount = rs.getBigDecimal("total_amount");
+                    totals.put(label, amount != null ? amount : BigDecimal.ZERO);
+                }
+            }
+            return totals;
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Error aggregating category spending totals: " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Returns total expenditure grouped by month ('YYYY-MM') or by day ('YYYY-MM-DD', last 30 days).
+     */
+    public Map<String, BigDecimal> getSpendingTrend(String userId, String granularity) throws DatabaseException {
+        Map<String, BigDecimal> trend = new LinkedHashMap<>();
+        boolean isDaily = "daily".equalsIgnoreCase(granularity);
+
+        String sql = isDaily
+            ? "SELECT DATE_FORMAT(`date`, '%Y-%m-%d') AS period_label, SUM(amount) AS total_amount "
+              + "FROM EXPENSES "
+              + "WHERE user_id = ? AND `date` >= DATE_SUB(CURDATE(), INTERVAL 30 DAY) "
+              + "GROUP BY period_label "
+              + "ORDER BY period_label ASC"
+            : "SELECT DATE_FORMAT(`date`, '%Y-%m') AS period_label, SUM(amount) AS total_amount "
+              + "FROM EXPENSES "
+              + "WHERE user_id = ? "
+              + "GROUP BY period_label "
+              + "ORDER BY period_label ASC";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, userId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String period = rs.getString("period_label");
+                    BigDecimal amount = rs.getBigDecimal("total_amount");
+                    if (period != null) {
+                        trend.put(period, amount != null ? amount : BigDecimal.ZERO);
+                    }
+                }
+            }
+            return trend;
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Error aggregating expenditure trend: " + e.getMessage(), e);
+        }
     }
 }
