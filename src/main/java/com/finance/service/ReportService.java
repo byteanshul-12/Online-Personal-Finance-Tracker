@@ -1,14 +1,5 @@
 package com.finance.service;
 
-import com.finance.concurrent.ParallelBatch;
-import com.finance.dao.BudgetDAO;
-import com.finance.dao.ExpenseDAO;
-import com.finance.exception.DatabaseException;
-import com.finance.model.Budget;
-import com.finance.model.BudgetComparison;
-import com.finance.model.CategorySummary;
-import com.finance.model.Expense;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Date;
@@ -17,6 +8,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+
+import com.finance.concurrent.ParallelBatch;
+import com.finance.dao.BudgetDAO;
+import com.finance.dao.ExpenseDAO;
+import com.finance.exception.DatabaseException;
+import com.finance.model.Budget;
+import com.finance.model.BudgetComparison;
+import com.finance.model.CategorySummary;
+import com.finance.model.Expense;
 
 /**
  * Business service handling financial reporting calculations.
@@ -170,5 +170,12 @@ public class ReportService {
         } catch (IllegalArgumentException e) {
             return null;
         }
+    }
+    public Map<String, BigDecimal> getCategorySpendingBreakdown(String userId) throws DatabaseException {
+        return expenseDAO.getCategorySpendingTotals(userId);
+    }
+
+    public Map<String, BigDecimal> getExpenditureTrend(String userId, String granularity) throws DatabaseException {
+        return expenseDAO.getSpendingTrend(userId, granularity);
     }
 }
