@@ -24,7 +24,7 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        handleLogout(request, response);
+        response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Logout requires POST with CSRF token.");
     }
 
     private void handleLogout(HttpServletRequest request, HttpServletResponse response) 

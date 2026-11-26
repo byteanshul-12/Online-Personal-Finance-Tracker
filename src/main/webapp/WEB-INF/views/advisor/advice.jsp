@@ -97,6 +97,7 @@
                     </div>
 
                     <form id="adviceForm" method="post" action="${pageContext.request.contextPath}/advisor/send-advice" novalidate>
+                        <input type="hidden" name="_csrf" value="${sessionScope.csrfToken}">
                         
                         <div class="form-group">
                             <label for="advisor_id" class="form-label">Advisor ID</label>
@@ -155,6 +156,7 @@
                                                 <td>${adv.message}</td>
                                                 <td class="text-right">
                                                     <form method="post" action="${pageContext.request.contextPath}/advisor/delete-advice" style="display:inline;">
+                                                        <input type="hidden" name="_csrf" value="${sessionScope.csrfToken}">
                                                         <input type="hidden" name="id" value="${adv.id}">
                                                         <button type="submit" class="btn btn-danger btn-sm btn-delete-confirm" data-item-name="advice">Delete</button>
                                                     </form>

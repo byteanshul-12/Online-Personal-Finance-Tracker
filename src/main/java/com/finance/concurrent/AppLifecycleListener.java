@@ -1,9 +1,14 @@
 package com.finance.concurrent;
 
+import com.finance.DBConnection;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -21,6 +26,7 @@ public class AppLifecycleListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent event) {
+        ensurePasswordColumnLength(event);
         TaskExecutor.get();
 
         scheduler = Executors.newSingleThreadScheduledExecutor(r -> {
@@ -53,5 +59,28 @@ public class AppLifecycleListener implements ServletContextListener {
 
     public static long getSampleIntervalSeconds() {
         return SAMPLE_INTERVAL_SECONDS;
+    }
+
+    /**
+     * Widens legacy user.password VARCHAR(16) columns to VARCHAR(100) so 60-char BCrypt hashes fit.
+     */
+    private static void ensurePasswordColumnLength(ServletContextEvent event) {
+        String checkSql = "SELECT CHARACTER_MAXIMUM_LENGTH FROM information_schema.COLUMNS "
+                + "WHERE TABLE_SCHEMA = DATABASE() AND LOWER(TABLE_NAME) = 'user' AND LOWER(COLUMN_NAME) = 'password'";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(checkSql);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                long maxLen = rs.getLong(1);
+                if (maxLen > 0 && maxLen < 60) {
+                    try (Statement st = conn.createStatement()) {
+                        st.execute("ALTER TABLE user MODIFY COLUMN password VARCHAR(100) NOT NULL");
+                    }
+                    event.getServletContext().log("Migrated user.password column from VARCHAR(" + maxLen + ") to VARCHAR(100).");
+                }
+            }
+        } catch (Exception e) {
+            event.getServletContext().log("Skipping automatic user.password schema check: " + e.getMessage());
+        }
     }
 }

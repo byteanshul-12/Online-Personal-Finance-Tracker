@@ -12,6 +12,7 @@ bin/
 # Environment & database credentials
 .env
 db.properties
+!src/test/resources/db.properties
 
 # Windows
 desktop.ini

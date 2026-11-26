@@ -33,11 +33,21 @@
     }
   }
 
+  function getThemeColors() {
+    const styles = getComputedStyle(document.documentElement);
+    return {
+      cardBg: styles.getPropertyValue("--bg-card").trim() || "#1D1D1B",
+      textPrimary: styles.getPropertyValue("--text-primary").trim() || "#D0CEC7",
+      textSecondary: styles.getPropertyValue("--text-secondary").trim() || "#8E8C86",
+      border: styles.getPropertyValue("--border").trim() || "#2B2B28"
+    };
+  }
+
   function setEmptyState(wrapId, emptyId, isEmpty) {
     const wrap = document.getElementById(wrapId);
     const empty = document.getElementById(emptyId);
     if (wrap) wrap.style.display = isEmpty ? "none" : "block";
-    if (empty) empty.style.display = isEmpty ? "flex" : "none";
+    if (empty) empty.style.display = isEmpty ? "block" : "none";
   }
 
   function renderCategoryChart(categories, totalSpent) {
@@ -54,6 +64,7 @@
     const labels = categories.map((item) => item.label);
     const values = categories.map((item) => Number(item.amount) || 0);
     const colors = labels.map((_, idx) => PALETTE[idx % PALETTE.length]);
+    const theme = getThemeColors();
 
     const canvas = document.getElementById("pfCategoryChart");
     if (!canvas) return;
@@ -65,7 +76,7 @@
         datasets: [{
           data: values,
           backgroundColor: colors,
-          borderColor: "#ffffff",
+          borderColor: theme.cardBg,
           borderWidth: 2,
           hoverOffset: 6
         }]
@@ -77,7 +88,11 @@
         plugins: {
           legend: {
             position: "bottom",
-            labels: { boxWidth: 12, padding: 14 }
+            labels: {
+              boxWidth: 12,
+              padding: 14,
+              color: theme.textPrimary
+            }
           },
           tooltip: {
             callbacks: {
@@ -112,6 +127,7 @@
 
     const labels = trend.map((item) => item.label);
     const values = trend.map((item) => Number(item.amount) || 0);
+    const theme = getThemeColors();
 
     const canvas = document.getElementById("pfTrendChart");
     if (!canvas) return;
@@ -145,11 +161,14 @@
         },
         scales: {
           x: {
-            grid: { display: false }
+            grid: { display: false },
+            ticks: { color: theme.textSecondary }
           },
           y: {
             beginAtZero: true,
+            grid: { color: theme.border },
             ticks: {
+              color: theme.textSecondary,
               callback: function (value) {
                 return currencyFormatter.format(value);
               }
@@ -162,6 +181,11 @@
 
   async function fetchAndRenderCharts(granularity) {
     showError(null);
+    if (typeof Chart === "undefined") {
+      showError("Chart library failed to load. Check your network connection and refresh.");
+      return;
+    }
+
     const endpoint = `${getContextPath()}/user/api/expense-charts?granularity=${encodeURIComponent(granularity)}`;
 
     try {

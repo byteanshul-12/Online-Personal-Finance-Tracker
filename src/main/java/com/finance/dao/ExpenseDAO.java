@@ -5,9 +5,11 @@ import com.finance.exception.DatabaseException;
 import com.finance.model.Expense;
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -284,7 +286,7 @@ public class ExpenseDAO {
                    + "SUM(amount) AS total_amount "
                    + "FROM EXPENSES "
                    + "WHERE user_id = ? "
-                   + "GROUP BY category_label "
+                   + "GROUP BY COALESCE(NULLIF(TRIM(category), ''), 'Uncategorized') "
                    + "ORDER BY total_amount DESC";
 
         try (Connection conn = DBConnection.getConnection();
@@ -316,19 +318,22 @@ public class ExpenseDAO {
         String sql = isDaily
             ? "SELECT DATE_FORMAT(`date`, '%Y-%m-%d') AS period_label, SUM(amount) AS total_amount "
               + "FROM EXPENSES "
-              + "WHERE user_id = ? AND `date` >= DATE_SUB(CURDATE(), INTERVAL 30 DAY) "
-              + "GROUP BY period_label "
+              + "WHERE user_id = ? AND `date` >= ? "
+              + "GROUP BY DATE_FORMAT(`date`, '%Y-%m-%d') "
               + "ORDER BY period_label ASC"
             : "SELECT DATE_FORMAT(`date`, '%Y-%m') AS period_label, SUM(amount) AS total_amount "
               + "FROM EXPENSES "
               + "WHERE user_id = ? "
-              + "GROUP BY period_label "
+              + "GROUP BY DATE_FORMAT(`date`, '%Y-%m') "
               + "ORDER BY period_label ASC";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, userId);
+            if (isDaily) {
+                stmt.setDate(2, Date.valueOf(LocalDate.now().minusDays(30)));
+            }
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {

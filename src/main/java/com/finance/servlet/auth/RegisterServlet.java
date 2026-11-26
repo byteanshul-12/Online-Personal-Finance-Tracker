@@ -4,12 +4,12 @@ import com.finance.exception.DatabaseException;
 import com.finance.exception.ValidationException;
 import com.finance.model.User;
 import com.finance.service.UserService;
+import com.finance.util.SessionUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -44,9 +44,8 @@ public class RegisterServlet extends HttpServlet {
         try {
             User newUser = userService.register(name, email, password, role);
 
-            // Establish authenticated session for newly registered user
-            HttpSession session = request.getSession(true);
-            session.setAttribute("user", newUser);
+            // Regenerate session ID and rotate CSRF token for newly registered user
+            SessionUtil.establishAuthenticatedSession(request, newUser);
 
             // Redirect based on selected role
             if ("ADMIN".equalsIgnoreCase(role)) {
@@ -61,7 +60,8 @@ public class RegisterServlet extends HttpServlet {
             request.setAttribute("errorMessage", e.getMessage());
             request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
         } catch (DatabaseException e) {
-            request.setAttribute("errorMessage", "Error completing registration. Please try again.");
+            getServletContext().log("Database error during registration", e);
+            request.setAttribute("errorMessage", "Error completing registration: " + e.getMessage());
             request.getRequestDispatcher("/WEB-INF/views/auth/register.jsp").forward(request, response);
         }
     }

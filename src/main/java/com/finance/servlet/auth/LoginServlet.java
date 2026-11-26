@@ -5,6 +5,7 @@ import com.finance.exception.DatabaseException;
 import com.finance.exception.ValidationException;
 import com.finance.model.User;
 import com.finance.service.UserService;
+import com.finance.util.SessionUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -52,9 +53,8 @@ public class LoginServlet extends HttpServlet {
         try {
             User user = userService.login(email, password);
 
-            // Establish authenticated session
-            HttpSession session = request.getSession(true);
-            session.setAttribute("user", user);
+            // Regenerate session ID and rotate CSRF token to prevent session fixation
+            SessionUtil.establishAuthenticatedSession(request, user);
 
             redirectToDashboard(request, response, user);
 
@@ -62,7 +62,8 @@ public class LoginServlet extends HttpServlet {
             request.setAttribute("errorMessage", e.getMessage());
             request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
         } catch (DatabaseException e) {
-            request.setAttribute("errorMessage", "Database error encountered during authentication.");
+            getServletContext().log("Database error during authentication", e);
+            request.setAttribute("errorMessage", "Database error encountered during authentication: " + e.getMessage());
             request.getRequestDispatcher("/WEB-INF/views/auth/login.jsp").forward(request, response);
         }
     }
