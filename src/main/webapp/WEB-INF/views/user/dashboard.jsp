@@ -90,7 +90,7 @@
                         <div class="card-header">
                             <div class="card-title">Category-Wise Breakdown</div>
                         </div>
-                        <div class="pf-chart-canvas-wrap" id="pf-category-wrap" style="position: relative; height: 290px; width: 100%;">
+                        <div class="pf-chart-canvas-wrap" id="pf-category-wrap">
                             <canvas id="pfCategoryChart" aria-label="Category-wise expenditure breakdown chart"></canvas>
                         </div>
                         <div class="empty-state" id="pf-category-empty" style="display: none;">
@@ -104,7 +104,7 @@
                         <div class="card-header">
                             <div class="card-title" id="pf-trend-heading">Monthly Expenditure Trend</div>
                         </div>
-                        <div class="pf-chart-canvas-wrap" id="pf-trend-wrap" style="position: relative; height: 290px; width: 100%;">
+                        <div class="pf-chart-canvas-wrap" id="pf-trend-wrap">
                             <canvas id="pfTrendChart" aria-label="Expenditure trend over time chart"></canvas>
                         </div>
                         <div class="empty-state" id="pf-trend-empty" style="display: none;">

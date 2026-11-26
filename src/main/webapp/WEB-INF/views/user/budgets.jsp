@@ -51,6 +51,7 @@
                                         <div class="flex-between mt-2" style="font-size: 0.8rem; color: var(--text-muted);">
                                             <span class="budget-remaining">Remaining: —</span>
                                             <form method="post" action="${pageContext.request.contextPath}/user/delete-budget" style="display:inline;">
+                                                <input type="hidden" name="_csrf" value="${sessionScope.csrfToken}">
                                                 <input type="hidden" name="id" value="${b.id}">
                                                 <button type="submit" class="btn btn-danger btn-sm btn-delete-confirm" data-item-name="budget">Delete</button>
                                             </form>
@@ -77,6 +78,7 @@
                         </div>
 
                         <form id="budgetForm" method="post" action="${pageContext.request.contextPath}/user/add-budget" novalidate>
+                            <input type="hidden" name="_csrf" value="${sessionScope.csrfToken}">
                             
                             <div class="form-group">
                                 <label for="category" class="form-label">Category</label>

@@ -19,6 +19,7 @@
         </div>
 
         <form method="post" action="${pageContext.request.contextPath}/logout" style="margin: 0;">
+            <input type="hidden" name="_csrf" value="${sessionScope.csrfToken}">
             <button type="submit" class="btn btn-outline btn-sm">Log out</button>
         </form>
     </div>

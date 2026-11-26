@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="${sessionScope.csrfToken}">
     <title>Sign In - Finance.</title>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css">
@@ -32,6 +33,7 @@
         <% } %>
 
         <form id="loginForm" method="post" action="${pageContext.request.contextPath}/login" class="auth-form" novalidate>
+            <input type="hidden" name="_csrf" value="${sessionScope.csrfToken}">
             
             <div class="form-group">
                 <label for="email" class="form-label">Email</label>

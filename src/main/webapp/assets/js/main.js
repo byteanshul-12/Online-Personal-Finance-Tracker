@@ -7,7 +7,27 @@
 document.addEventListener('DOMContentLoaded', function () {
     initMobileNav();
     initAlertDismissals();
+    initCsrfFormProtection();
 });
+
+/**
+ * Ensures every POST form includes the session CSRF token from the page meta tag.
+ */
+function initCsrfFormProtection() {
+    const meta = document.querySelector('meta[name="csrf-token"]');
+    const token = meta ? meta.getAttribute('content') : '';
+    if (!token) return;
+
+    document.querySelectorAll('form[method="post"], form[method="POST"]').forEach(form => {
+        if (!form.querySelector('input[name="_csrf"]')) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = '_csrf';
+            input.value = token;
+            form.appendChild(input);
+        }
+    });
+}
 
 /**
  * Initializes mobile sidebar toggle and backdrop overlay.

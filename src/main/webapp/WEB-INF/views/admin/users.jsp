@@ -50,6 +50,7 @@
                                             <td><span class="badge badge-info">${u.role}</span></td>
                                             <td class="text-right">
                                                 <form method="post" action="${pageContext.request.contextPath}/admin/delete-user" style="display:inline;">
+                                                    <input type="hidden" name="_csrf" value="${sessionScope.csrfToken}">
                                                     <input type="hidden" name="id" value="${u.id}">
                                                     <button type="submit" class="btn btn-danger btn-sm btn-delete-confirm" data-item-name="user ${u.name}">Delete</button>
                                                 </form>

@@ -67,6 +67,7 @@
                 </div>
 
                 <form method="post" action="${pageContext.request.contextPath}/user/update-password">
+                    <input type="hidden" name="_csrf" value="${sessionScope.csrfToken}">
                     <div class="form-group">
                         <label for="oldPassword" class="form-label">Current Password</label>
                         <input type="password" id="oldPassword" name="oldPassword" class="form-control" placeholder="••••••••" maxlength="16">
@@ -88,6 +89,7 @@
                 </div>
 
                 <form id="feedbackForm" method="post" action="${pageContext.request.contextPath}/feedback/submit" novalidate>
+                    <input type="hidden" name="_csrf" value="${sessionScope.csrfToken}">
                     <input type="hidden" name="user_id" value="${sessionScope.user.id}">
 
                     <div class="form-group">

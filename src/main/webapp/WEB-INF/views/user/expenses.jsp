@@ -56,6 +56,7 @@
                                                 <div class="flex gap-1" style="justify-content: flex-end;">
                                                     <a href="${pageContext.request.contextPath}/user/add-expense?id=${expense.id}" class="btn btn-secondary btn-sm">Edit</a>
                                                     <form method="post" action="${pageContext.request.contextPath}/user/delete-expense" style="display:inline;">
+                                                        <input type="hidden" name="_csrf" value="${sessionScope.csrfToken}">
                                                         <input type="hidden" name="id" value="${expense.id}">
                                                         <button type="submit" class="btn btn-danger btn-sm btn-delete-confirm" data-item-name="expense ID ${expense.id}">Delete</button>
                                                     </form>

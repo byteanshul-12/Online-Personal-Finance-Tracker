@@ -376,115 +376,33 @@
 }
 /* === Expenditure Analytics Charts === */
 .pf-charts-section {
-  margin: 1.5rem 0;
+    margin: var(--space-3) 0 var(--space-4);
 }
 
 .pf-charts-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: var(--space-2);
 }
 
 .pf-charts-title {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.pf-granularity-group {
-  display: inline-flex;
-  gap: 0.5rem;
-}
-
-.pf-toggle-btn {
-  padding: 0.45rem 0.9rem;
-  border: 1px solid #cbd5e1;
-  background: #ffffff;
-  color: #334155;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-}
-
-.pf-toggle-btn:hover {
-  background: #f1f5f9;
-}
-
-.pf-toggle-btn.pf-active {
-  background: #2563eb;
-  border-color: #2563eb;
-  color: #ffffff;
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--text-primary);
 }
 
 .pf-chart-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.25rem;
-}
-
-.pf-chart-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  padding: 1.25rem;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
-}
-
-.pf-chart-card-title {
-  margin: 0 0 0.85rem 0;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #1e293b;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-3);
 }
 
 .pf-chart-canvas-wrap {
-  position: relative;
-  height: 300px;
-  width: 100%;
+    position: relative;
+    height: 290px;
+    width: 100%;
 }
-
-.pf-empty-state {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  height: 300px;
-  padding: 1.25rem;
-  color: #64748b;
-  background: #f8fafc;
-  border: 1px dashed #cbd5e1;
-  border-radius: 8px;
-  font-size: 0.95rem;
-}
-
-.pf-error-banner {
-  display: none;
-  padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
-  border-radius: 6px;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  color: #991b1b;
-  font-size: 0.9rem;
-}
-.pf-charts-section { margin: 1.5rem 0; }
-.pf-charts-header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
-.pf-charts-title { margin: 0; font-size: 1.15rem; font-weight: 600; }
-.pf-chart-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 1.25rem;
-}
-.pf-chart-canvas-wrap { position: relative; height: 290px; width: 100%; }

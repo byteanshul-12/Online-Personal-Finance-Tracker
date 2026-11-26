@@ -26,7 +26,7 @@
 
             <div class="card">
                 <form id="expenseForm" method="post" action="${pageContext.request.contextPath}/user/add-expense" novalidate>
-                    
+                    <input type="hidden" name="_csrf" value="${sessionScope.csrfToken}">
                     <input type="hidden" name="id" value="${expense != null ? expense.id : param.id}">
 
                     <div class="form-group">
