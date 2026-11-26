@@ -113,6 +113,20 @@ CREATE TABLE `user` (
   CONSTRAINT `chk_role` CHECK ((`role` in (_utf8mb4'user',_utf8mb4'advisor',_utf8mb4'admin')))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE IF NOT EXISTS `advice_requests` (
+  `id` varchar(30) NOT NULL,
+  `user_id` varchar(30) NOT NULL,
+  `advisor_id` varchar(30) DEFAULT NULL,
+  `subject` varchar(80) NOT NULL,
+  `message` varchar(300) NOT NULL,
+  `status` varchar(15) NOT NULL DEFAULT 'OPEN',
+  `created_at` date NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_adv_req_user` (`user_id`),
+  KEY `idx_adv_req_advisor` (`advisor_id`),
+  CONSTRAINT `fk_adv_req_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

@@ -25,9 +25,52 @@
             <div class="page-header">
                 <div>
                     <h1 class="page-title">Client Advice & Expenses</h1>
-                    <p class="page-subtitle">Inspect user expenses and send financial advice.</p>
+                    <p class="page-subtitle">Inspect user expenses, review advice requests, and send financial advice.</p>
                 </div>
             </div>
+
+            <!-- Open User Advice Requests -->
+            <c:if test="${not empty openRequests}">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <div class="card-title">Pending User Advice Requests</div>
+                        <span class="badge">${openRequests.size()} open</span>
+                    </div>
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>User</th>
+                                    <th>Topic &amp; Request</th>
+                                    <th class="text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${openRequests}" var="req">
+                                    <tr>
+                                        <td class="text-muted">${req.createdAt}</td>
+                                        <td>
+                                            <c:out value="${req.userName}"/><br>
+                                            <span class="font-mono text-muted">${req.userId}</span>
+                                        </td>
+                                        <td>
+                                            <strong><c:out value="${req.subject}"/></strong><br>
+                                            <span class="text-secondary"><c:out value="${req.message}"/></span>
+                                        </td>
+                                        <td class="text-right">
+                                            <a class="btn btn-secondary btn-sm"
+                                               href="${pageContext.request.contextPath}/advisor/advice?selectedUserId=${req.userId}&amp;requestId=${req.id}">
+                                                Review &amp; Reply
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </c:if>
 
             <!-- Select Client User to Inspect -->
             <div class="card mb-4">
@@ -97,6 +140,7 @@
                     </div>
 
                     <form id="adviceForm" method="post" action="${pageContext.request.contextPath}/advisor/send-advice" novalidate>
+                        <input type="hidden" name="request_id" value="${replyRequestId != null ? replyRequestId : ''}">
                         
                         <div class="form-group">
                             <label for="advisor_id" class="form-label">Advisor ID</label>

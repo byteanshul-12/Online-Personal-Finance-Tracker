@@ -3,8 +3,10 @@ package com.finance.servlet.advisor;
 import com.finance.exception.DatabaseException;
 import com.finance.exception.ValidationException;
 import com.finance.model.Advice;
+import com.finance.model.AdviceRequest;
 import com.finance.model.Expense;
 import com.finance.model.User;
+import com.finance.service.AdviceRequestService;
 import com.finance.service.AdviceService;
 import com.finance.service.ExpenseService;
 import com.finance.service.FeedbackService;
@@ -26,6 +28,7 @@ import java.util.List;
 public class AdviceServlet extends HttpServlet {
 
     private AdviceService adviceService;
+    private AdviceRequestService adviceRequestService;
     private UserService userService;
     private ExpenseService expenseService;
     private FeedbackService feedbackService;
@@ -33,6 +36,7 @@ public class AdviceServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         this.adviceService = new AdviceService();
+        this.adviceRequestService = new AdviceRequestService();
         this.userService = new UserService();
         this.expenseService = new ExpenseService();
         this.feedbackService = new FeedbackService();
@@ -52,6 +56,7 @@ public class AdviceServlet extends HttpServlet {
 
         try {
             List<Advice> adviceList = adviceService.getAdviceByAdvisor(advisor.getId());
+            List<AdviceRequest> openRequests = adviceRequestService.getOpenRequestsForAdvisor(advisor.getId());
             List<User> userList = userService.getAllUsers();
 
             String selectedUserId = request.getParameter("selectedUserId");
@@ -62,6 +67,12 @@ public class AdviceServlet extends HttpServlet {
                 request.setAttribute("selectedUserExpenses", selectedUserExpenses.isEmpty() ? null : selectedUserExpenses);
             }
 
+            String replyRequestId = request.getParameter("requestId");
+            if (replyRequestId != null && !replyRequestId.trim().isEmpty()) {
+                request.setAttribute("replyRequestId", replyRequestId.trim());
+            }
+
+            request.setAttribute("openRequests", openRequests.isEmpty() ? null : openRequests);
             request.setAttribute("userList", userList.isEmpty() ? null : userList);
             request.setAttribute("adviceList", adviceList.isEmpty() ? null : adviceList);
             request.getRequestDispatcher("/WEB-INF/views/advisor/advice.jsp").forward(request, response);
@@ -99,8 +110,12 @@ public class AdviceServlet extends HttpServlet {
                 String targetUserId = request.getParameter("user_id");
                 String date = request.getParameter("date");
                 String message = request.getParameter("message");
+                String requestId = request.getParameter("request_id");
 
                 adviceService.sendAdvice(advisor.getId(), targetUserId, date, message);
+                if (requestId != null && !requestId.trim().isEmpty()) {
+                    adviceRequestService.markAnswered(requestId);
+                }
                 response.sendRedirect(request.getContextPath() + "/advisor/advice");
             }
 
