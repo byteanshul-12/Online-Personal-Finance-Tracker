@@ -1,229 +1,172 @@
 # Online Personal Finance Tracker
 
-A student-built Java web application developed as a college project to
-manage personal finances through **expenses, budgets, reports, advisor
-guidance, and feedback**.
+A Java-based web application for managing personal finances through expense tracking, budget management, financial reports, visual analytics, advisor guidance, and feedback.
 
-The project demonstrates Java, JDBC, MySQL, JSP, Servlets, session
-management, role-based access, exception handling, transactions, and
-basic multithreading.
-
-------------------------------------------------------------------------
+Developed as a college project to demonstrate Java programming, JDBC, MySQL, Jakarta Servlets, JSP, session management, role-based access control, exception handling, transactions, and multithreading.
 
 ## 1. Project Overview
 
-The application provides different features according to the user's role.
+The Online Personal Finance Tracker helps users monitor their income and expenses, manage budgets, understand spending patterns, and make informed financial decisions.
+
+The application provides three role-based modules:
 
 ### User
-
-- Register and log in
-- Add, view, update, and delete expenses
-- Create and manage budgets
-- View spending summaries and recent activity
-- Generate financial reports
-- View budget-versus-actual spending
-- View financial advice
-- Submit feedback
+- Register and log in securely.
+- Add, view, update, and delete expenses.
+- Create and manage budgets.
+- View spending summaries and recent activity.
+- Generate financial reports.
+- Compare budget allocations with actual spending.
+- View financial advice.
+- Submit feedback.
 
 ### Advisor
-
-- Log in through an advisor account
-- View available users
-- View selected users' expense information
-- Provide financial advice
-- View advice records
+- Log in through an advisor account.
+- View available users.
+- Access selected users' expense information.
+- Provide financial advice.
+- View previously submitted advice records.
 
 ### Admin
+- Manage user accounts.
+- View submitted feedback.
+- Update feedback status.
+- Monitor basic system-level statistics.
 
-- Log in through an admin account
-- View and manage user accounts
-- View submitted feedback
-- Update feedback status
-- View basic system-level statistics
-
-### Main Features
+## 2. Key Features
 
 | Feature | Description |
 |---|---|
-| **Authentication** | Registration, login, logout, and session-based authentication |
-| **Expense Management** | Add, view, update, and delete expenses |
-| **Budget Management** | Create, view, update, and delete budgets |
-| **Reports** | Spending summaries, category-wise spending, and budget comparison |
-| **Advisor Module** | Advisors can view user expense information and provide financial advice |
-| **Feedback** | Users can submit feedback and admins can review and update its status |
+| Authentication | Registration, login, logout, and session management |
+| Expense Management | Complete expense CRUD operations |
+| Budget Management | Create, update, view, and delete budgets |
+| Financial Reports | Spending summaries and category-wise reports |
+| Graphical Analytics | Visual representation of financial and spending information |
+| Budget Analysis | Compare actual expenditure against budget allocations |
+| Advisor Module | Financial guidance and user expense information |
+| Feedback System | Feedback submission and administrative review |
+| Role-Based Access | Separate permissions for User, Advisor, and Admin |
 
----
+### Graphical Financial Analytics
 
-## 2. Technologies Used
+The application includes graphical representations to make financial information easier to understand.
+
+The analytics section is intended to help users:
+- Understand category-wise spending distribution.
+- Observe monthly expenditure patterns.
+- Review spending trends.
+- Compare financial activity with budget allocations.
+
+## 3. Technology Stack
 
 | Area | Technology |
 |---|---|
-| **Programming Language** | Java |
-| **Frontend** | JSP, HTML, CSS, JavaScript, JSTL |
-| **Web Layer** | Jakarta Servlets, Servlet Filters |
-| **Backend** | Java Service Classes, DAO Pattern |
-| **Database** | MySQL 8.x |
-| **Database Access** | JDBC |
-| **Build Tool** | Maven |
-| **Web Server** | Apache Tomcat 11 |
-| **Java Version** | JDK 21+ |
-| **Packaging** | WAR |
+| Programming Language | Java |
+| Frontend | JSP, HTML, CSS, JavaScript |
+| Web Layer | Jakarta Servlets |
+| Backend | Java Service Classes |
+| Database | MySQL 8.x |
+| Database Connectivity | JDBC |
+| Build Tool | Apache Maven |
+| Web Server | Apache Tomcat 11 |
+| Java Version | JDK 21+ |
+| Packaging | WAR |
 
-> The Maven project is compiled for Java 21, so **JDK 21 or newer** is recommended.
+## 4. Application Architecture
 
----
+The project follows a layered architecture using the DAO and Service patterns.
 
-## 3. How the Application Works
-
-The project follows a layered architecture:
-
-``` text
-Browser
-   ↓
-JSP / HTML / CSS / JavaScript
-   ↓
-Servlet
-   ↓
-Service
-   ↓
-DAO
-   ↓
-JDBC
-   ↓
-MySQL
+```text
+              Browser
+                 |
+          JSP / HTML / CSS
+                 |
+              Servlet
+                 |
+              Service
+                 |
+                DAO
+                 |
+                JDBC
+                 |
+               MySQL
 ```
 
-| Layer | Purpose |
+| Layer | Responsibility |
 |---|---|
-| **JSP / Frontend** | Displays pages and collects user input |
-| **Servlets** | Receive HTTP requests and send responses |
-| **Services** | Handle validation and application/business logic |
-| **DAOs** | Perform database operations using JDBC |
-| **Models** | Represent application data |
-| **Filters** | Handle authentication and role-based access |
+| JSP / Frontend | Displays pages and collects user input |
+| Servlets | Handles HTTP requests and responses |
+| Services | Implements application and business logic |
+| DAO | Handles database operations |
+| Models | Represents application data |
+| Filters | Handles authentication and role-based access |
 
-------------------------------------------------------------------------
+## 5. Database
 
-## 4. Database
+The application uses MySQL.
 
-The project uses MySQL.
+**Database Name:** `suspicious4`
 
-### Database Name
+The database schema is available at:
 
-``` text
-suspicious4
+```text
+database/schema.sql
 ```
 
-### Main Tables
+### Main Database Tables
 
 | Table | Purpose |
 |---|---|
-| `user` | Stores user account information |
-| `expenses` | Stores user expenses |
-| `budgets` | Stores budgets |
-| `advice` | Stores advisor advice |
-| `feedback` | Stores user feedback |
+| `user` | User account information |
+| `expenses` | Expense records |
+| `budgets` | Budget information |
+| `advice` | Financial advice records |
+| `feedback` | User feedback |
 
-The database structure is available at:
+The schema provides the database structure without requiring pre-filled demonstration records.
 
-``` text
-database/schema.sql
-```
+## 6. Installation and Setup
 
-The schema contains the database and table structure but **does not
-contain fake/demo records**.
+### Prerequisites
 
-------------------------------------------------------------------------
+Install the following software:
 
-# 5. Running the Project Locally
+- JDK 21 or newer
+- Apache Maven
+- MySQL 8.x
+- MySQL Workbench
+- Apache Tomcat 11
+- Git
 
-Follow these steps in order. They are written for someone setting up the
-project on a fresh Windows machine.
+Verify Java and Maven installations:
 
-## Requirements
-
-Install the following before starting:
-
-  Software          Recommended
-  ----------------- -----------------------
-  Java              JDK 21 or newer
-  Maven             Latest stable version
-  MySQL             MySQL 8.x
-  Database Tool     MySQL Workbench
-  Web Server        Apache Tomcat 11
-  Version Control   Git
-
-### Check Java
-
-Open Command Prompt or Git Bash:
-
-``` bash
+```bash
 java -version
-```
-
-You should see your installed Java version.
-
-### Check Maven
-
-``` bash
 mvn -version
 ```
 
-If both commands work, continue.
+### Step 1: Clone the Repository
 
-------------------------------------------------------------------------
-
-## Step 1 --- Get the Project
-
-Clone the GitHub repository:
-
-``` bash
+```bash
 git clone https://github.com/shreybaba/Online-Personal-Finance-Tracker.git
 ```
 
-Enter the project folder:
+Navigate to the project directory:
 
-``` bash
+```bash
 cd Online-Personal-Finance-Tracker
 ```
 
-You can also download the repository as a ZIP and extract it.
+### Step 2: Create the Database
 
-------------------------------------------------------------------------
+1. Start your MySQL server.
+2. Open MySQL Workbench.
+3. Open `database/schema.sql`.
+4. Execute the complete SQL script.
 
-## Step 2 --- Start MySQL
+Verify the database:
 
-Make sure your local MySQL server is running.
-
-Open **MySQL Workbench** and connect to your local MySQL server.
-
-------------------------------------------------------------------------
-
-## Step 3 --- Create the Database
-
-Inside the project, locate:
-
-``` text
-database/schema.sql
-```
-
-Open this file in MySQL Workbench.
-
-Run the complete SQL script.
-
-The script creates the database:
-
-``` text
-suspicious4
-```
-
-and its required tables.
-
-### Verify the database
-
-Run:
-
-``` sql
+```sql
 SHOW DATABASES;
 
 USE suspicious4;
@@ -231,379 +174,175 @@ USE suspicious4;
 SHOW TABLES;
 ```
 
-You should see:
+### Step 3: Configure Database Credentials
 
-  Expected Table
-  ----------------
-  `advice`
-  `budgets`
-  `expenses`
-  `feedback`
-  `user`
+Create the configuration file:
 
-**Do not manually insert random demo data.** The project is designed to
-work with actual data created through the application.
-
-------------------------------------------------------------------------
-
-## Step 4 --- Configure Database Credentials
-
-The application needs your local MySQL credentials.
-
-Create this file:
-
-``` text
+```text
 src/main/resources/db.properties
 ```
 
-Use:
+Use `db.properties.example` as the template.
 
-``` text
-db.properties.example
-```
+Add your local MySQL credentials:
 
-as the template.
-
-Add:
-
-``` properties
+```properties
 db.url=jdbc:mysql://localhost:3306/suspicious4
 db.user=root
 db.password=YOUR_MYSQL_PASSWORD
 ```
 
-Replace:
+Replace `YOUR_MYSQL_PASSWORD` with your local MySQL password.
 
-``` text
-YOUR_MYSQL_PASSWORD
+**Configuration security:**
+
+- Commit `db.properties.example` to GitHub.
+- Keep the actual `db.properties` file local.
+- Never commit database passwords or credentials.
+
+### Step 4: Build the Application
+
+Open a terminal in the project root and execute:
+
+```bash
+mvn clean package
 ```
 
-with the password of your local MySQL `root` account.
+After a successful build, Maven generates:
 
-### Important
-
-  File                      What to do
-  ------------------------- ------------------------
-  `db.properties.example`   Safe to keep in GitHub
-  `db.properties`           Keep local only
-  MySQL password            Never commit it
-
-`db.properties` is excluded through `.gitignore`.
-
-------------------------------------------------------------------------
-
-## Step 5 --- Build the Project
-
-Make sure your terminal is inside the project root --- the folder
-containing `pom.xml`.
-
-Run:
-
-``` bash
-mvn package
-```
-
-If the build is successful, Maven creates:
-
-``` text
+```text
 target/finance.war
 ```
 
-The important file is:
+### Step 5: Deploy to Apache Tomcat
 
-  File                   Purpose
-  ---------------------- ----------------------------
-  `target/finance.war`   Deployable web application
+Locate your Tomcat installation.
 
-------------------------------------------------------------------------
+Example:
 
-## Step 6 --- Deploy to Tomcat
-
-Find your Tomcat installation.
-
-For example:
-
-``` text
-C:\apache-tomcat-11.x.x
+```text
+C:\apache-tomcat-11.0.26
 ```
 
-Open:
+Copy the generated WAR file:
 
-``` text
-C:\apache-tomcat-11.x.x\webapps\
-```
-
-Copy **only**:
-
-``` text
+```text
 target/finance.war
 ```
 
-into the Tomcat `webapps` folder.
+into:
 
-### Example
-
-``` text
-C:\apache-tomcat-11.x.x\webapps\finance.war
+```text
+C:\apache-tomcat-11.0.26\webapps\
 ```
 
-**Do not manually copy the `target/finance` folder.**
+Tomcat automatically extracts the WAR file during deployment.
 
-When Tomcat starts, it automatically extracts the WAR and creates:
+### Step 6: Start Tomcat
 
-``` text
-webapps/
-├── finance.war
-└── finance/
+Open the Tomcat `bin` directory:
+
+```cmd
+cd C:\apache-tomcat-11.0.26\bin
 ```
 
-------------------------------------------------------------------------
+Start the server:
 
-## Step 7 --- Start Tomcat
-
-Go to the Tomcat `bin` folder:
-
-``` text
-C:\apache-tomcat-11.x.x\bin
-```
-
-### Windows
-
-Run:
-
-``` text
+```cmd
 startup.bat
 ```
 
-### Git Bash
+### Step 7: Open the Application
 
-``` bash
-cd "C:/apache-tomcat-11.x.x/bin"
-./startup.bat
-```
+Visit:
 
-Wait a few seconds for Tomcat to start and deploy the application.
-
-------------------------------------------------------------------------
-
-## Step 8 --- Open the Application
-
-Open your browser and visit:
-
-``` text
+```text
 http://localhost:8080/finance/
 ```
 
-The `/finance` part comes from the WAR file name:
+The application should now be accessible through your browser.
 
-``` text
-finance.war
-```
+## 7. Application Testing Flow
 
-You should now see the Finance application.
+A basic testing workflow:
 
-------------------------------------------------------------------------
-
-## Step 9 --- Test the Application
-
-A basic testing flow is:
-
-``` text
-Register
-   ↓
-Login
-   ↓
+```text
+Registration
+     |
+    Login
+     |
 User Dashboard
-   ↓
-Add Expense
-   ↓
-View / Edit / Delete Expense
-   ↓
+     |
+Add Expenses
+     |
+Manage Expenses
+     |
 Create Budget
-   ↓
-View Reports
+     |
+View Financial Reports
+     |
+Explore Graphical Analytics
 ```
 
-Advisor and Admin features can then be tested using accounts with the
-appropriate roles.
+Advisor and Admin functionality can be tested using accounts with the appropriate roles.
 
-The application does not depend on pre-filled fake financial data.
+## 8. Project Structure
 
-------------------------------------------------------------------------
-
-## Step 10 --- Stop Tomcat
-
-When finished, open:
-
-``` text
-C:\apache-tomcat-11.x.x\bin
-```
-
-Run:
-
-``` text
-shutdown.bat
-```
-
-Or from Git Bash:
-
-``` bash
-./shutdown.bat
-```
-
-------------------------------------------------------------------------
-
-# 6. Common Setup Problems
-
-## Maven is not recognized
-
-If this appears:
-
-``` text
-'mvn' is not recognized...
-```
-
-Maven is either not installed correctly or its `bin` directory is not
-available in PATH.
-
-Check:
-
-``` bash
-mvn -version
-```
-
-------------------------------------------------------------------------
-
-## MySQL Connection Error
-
-Check the following:
-
-  Check          Expected
-  -------------- ------------------------------------
-  MySQL server   Running
-  Database       `suspicious4`
-  Username       `root`
-  Password       Your local MySQL password
-  Config file    `src/main/resources/db.properties`
-  Tables         Created from `database/schema.sql`
-
-Verify with:
-
-``` sql
-USE suspicious4;
-SHOW TABLES;
-```
-
-------------------------------------------------------------------------
-
-## Login Shows `500 Server Error`
-
-A `500` error means something failed on the server side.
-
-First check the **Tomcat console/log immediately after clicking Login**.
-
-Common local setup causes are:
-
--   MySQL is not running
--   `db.properties` is missing
--   MySQL username/password is incorrect
--   `suspicious4` does not exist
--   Required tables were not created
-
-**Do not change Java code immediately. Check the Tomcat error first.**
-
-------------------------------------------------------------------------
-
-## Application Does Not Open
-
-Check:
-
-  Check      Expected
-  ---------- ----------------------------------
-  Tomcat     Running
-  WAR file   Inside `Tomcat/webapps`
-  WAR name   `finance.war`
-  URL        `http://localhost:8080/finance/`
-
-If port `8080` is already being used by another application, Tomcat may
-need a different port.
-
-------------------------------------------------------------------------
-
-# 7. Project Structure
-
-``` text
+```text
 Online-Personal-Finance-Tracker/
-│
+|
 ├── database/
 │   └── schema.sql
-│
+|
 ├── docs/
-│
+|
 ├── src/
 │   └── main/
-│       ├── java/com/finance/
-│       │   ├── dao/
-│       │   ├── exception/
-│       │   ├── filter/
-│       │   ├── model/
-│       │   ├── service/
-│       │   ├── servlet/
-│       │   └── util/
+│       ├── java/
+│       │   └── com/finance/
+│       │       ├── dao/
+│       │       ├── exception/
+│       │       ├── filter/
+│       │       ├── model/
+│       │       ├── service/
+│       │       ├── servlet/
+│       │       └── util/
 │       │
 │       ├── resources/
-│       │   |__ db.properties
-|       |   |__ schema.sql
+│       │   └── db.properties.example
 │       │
 │       └── webapp/
 │           ├── WEB-INF/
 │           ├── assets/
 │           └── index.jsp
-│
+|
 ├── db.properties.example
 ├── pom.xml
 ├── README.md
 └── .gitignore
 ```
 
-------------------------------------------------------------------------
+The actual local database configuration file `db.properties` is excluded from version control.
 
-# 8. Java Concepts Demonstrated
+## 9. Java Concepts Demonstrated
 
-This project was developed as a student project to apply concepts from
-Java, database, and web programming.
+This project applies several Java programming concepts in a practical web application.
 
-  -----------------------------------------------------------------------
-  Concept                             Where It Is Used
-  ----------------------------------- -----------------------------------
-  **OOP**                             Models, Services, DAOs,
-                                      encapsulation and inheritance
-
-  **Collections**                     `List`, `ArrayList`, `Map`,
-                                      `HashMap`
-
-  **Exception Handling**              Custom application exception
-                                      hierarchy
-
-  **JDBC**                            Database connection and SQL
-                                      operations
-
-  **Transactions**                    Commit/rollback during user
-                                      deletion
-
-  **Multithreading**                  `ExecutorService`, `Callable`,
-                                      `Future` in reports
-
-  **HTTP**                            Servlets, GET/POST, parameters,
-                                      forwards and redirects
-
-  **Sessions**                        `HttpSession`, authentication and
-                                      role filters
-  -----------------------------------------------------------------------
+| Concept | Implementation |
+|---|---|
+| Object-Oriented Programming | Models, services, DAOs, inheritance, encapsulation |
+| Collections | List, ArrayList, Map, HashMap |
+| Exception Handling | Custom exception hierarchy |
+| JDBC | Database connectivity and SQL operations |
+| Transactions | Commit and rollback |
+| Multithreading | ExecutorService, Callable, Future |
+| HTTP | Servlets, GET/POST, forwards and redirects |
+| Session Management | HttpSession and authentication filters |
+| Design Patterns | DAO and Service patterns |
 
 ### Exception Hierarchy
 
-``` text
+```text
 FinanceTrackerException
 ├── AuthenticationException
 ├── AuthorizationException
@@ -613,125 +352,91 @@ FinanceTrackerException
 
 ### Multithreading
 
-The report service uses:
+The report service uses Java concurrency utilities such as:
 
-``` text
+```java
 ExecutorService
 Callable
 Future
 ```
 
-for independent report calculations.
+These utilities support independent report-processing tasks.
 
-### Transactions
+### Transaction Management
 
-The project demonstrates:
+The application demonstrates JDBC transaction management using:
 
-``` text
-setAutoCommit(false)
-commit()
-rollback()
+```java
+setAutoCommit(false);
+commit();
+rollback();
 ```
 
-for transactional database operations.
+## 10. Important Project Files
 
-------------------------------------------------------------------------
+| Component | Location |
+|---|---|
+| Database Schema | `database/schema.sql` |
+| Database Connection | `src/main/java/com/finance/DBConnection.java` |
+| DAO Classes | `src/main/java/com/finance/dao/` |
+| Service Classes | `src/main/java/com/finance/service/` |
+| Model Classes | `src/main/java/com/finance/model/` |
+| Authentication | `src/main/java/com/finance/servlet/auth/` |
+| Security Filters | `src/main/java/com/finance/filter/` |
+| Report Service | `src/main/java/com/finance/service/ReportService.java` |
+| Web Configuration | `src/main/webapp/WEB-INF/web.xml` |
 
-# 9. Review 1 Coverage
+## 11. Troubleshooting
 
-The implementation covers the major Review 1 requirements.
+### Maven Build Failure
 
-  -----------------------------------------------------------------------
-  Review 1 Requirement                Implementation in Project
-  ----------------------------------- -----------------------------------
-  Problem Understanding & Solution    Personal finance management system
-  Design                              with User, Advisor and Admin roles
+Run:
 
-  OOP                                 Models, Services, DAOs, inheritance
-                                      and encapsulation
-
-  Collections                         `List`, `ArrayList`, `Map`,
-                                      `HashMap`
-
-  Exception Handling                  Custom exception hierarchy
-
-  Threads                             `ExecutorService`, `Callable`,
-                                      `Future`
-
-  Database Schema                     MySQL database with five main
-                                      tables
-
-  JDBC                                `Connection`, `PreparedStatement`,
-                                      `ResultSet`
-
-  CRUD                                Users, expenses, budgets, advice
-                                      and feedback
-
-  Transactions                        Commit and rollback in `UserDAO`
-
-  HTTP                                Servlets, GET/POST, parameters,
-                                      forwards and redirects
-
-  Sessions                            `HttpSession`, `AuthFilter`,
-                                      `RoleFilter`
-  -----------------------------------------------------------------------
-
-------------------------------------------------------------------------
-
-# 10. Important Files for Demonstration
-
-  --------------------------------------------------------------------------------------------
-  Topic                               Important File / Folder
-  ----------------------------------- --------------------------------------------------------
-  Database                            `database/schema.sql`
-
-  Database Connection                 `src/main/java/com/finance/DBConnection.java`
-
-  JDBC / DAO                          `src/main/java/com/finance/dao/`
-
-  Services                            `src/main/java/com/finance/service/`
-
-  Models                              `src/main/java/com/finance/model/`
-
-  Authentication                      `src/main/java/com/finance/servlet/auth/`
-
-  Sessions & Roles                    `src/main/java/com/finance/filter/`
-
-  Multithreading                      `src/main/java/com/finance/service/ReportService.java`
-
-  Transactions                        `src/main/java/com/finance/dao/UserDAO.java`
-  --------------------------------------------------------------------------------------------
-
-------------------------------------------------------------------------
-
-# 11. Repository Safety
-
-### Safe to commit
-
-``` text
-db.properties.example
+```bash
+mvn clean package
 ```
 
-It contains placeholder values only.
+If Maven cannot delete the `target` directory, stop Tomcat and other processes that may be using project files before rebuilding.
 
-### Do not commit
+### MySQL Connection Error
 
-``` text
-src/main/resources/db.properties
-```
+Verify:
+- MySQL server is running.
+- Database `suspicious4` exists.
+- Database credentials are correct.
+- `src/main/resources/db.properties` exists.
+- Required database tables have been created.
 
-It contains the local MySQL password.
+### HTTP 404 Error
 
-Generated files such as `target/`, IDE files, logs, and other local
-development files are also excluded through `.gitignore`.
+Verify:
+- Tomcat is running.
+- `finance.war` is inside Tomcat's `webapps` directory.
+- Application deployment completed successfully.
+- The requested servlet mapping exists.
+- Check Tomcat logs for deployment errors.
 
-------------------------------------------------------------------------
+### HTTP 500 Error
 
-# 12. Project Repository
+Check the Tomcat logs immediately after reproducing the error.
 
-**GitHub:**\
+Common causes include:
+- Database connection failure.
+- Missing configuration files.
+- Incorrect SQL queries.
+- Missing dependencies.
+- Application initialization errors.
+
+## 12. Repository
+
+**GitHub Repository:**
+
 https://github.com/shreybaba/Online-Personal-Finance-Tracker
 
-The repository contains the source code, database schema, configuration
-template, and documentation required to understand and run the student
-project locally.
+The repository contains the source code, database schema, configuration template, and documentation required to understand and run the application locally.
+
+---
+
+**Developed by Shreyansh**
+
+*Online Personal Finance Tracker — A practical implementation of Java-based web application development and database management.*
