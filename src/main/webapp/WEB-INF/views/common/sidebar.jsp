@@ -74,9 +74,14 @@
                         <span>Reports</span>
                     </a>
                 </li>
+                <li class="sidebar-item ${param.activePage == 'advice' ? 'active' : ''}">
+                    <a href="${pageContext.request.contextPath}/user/advice">
+                        <span>Advice &amp; AI Chat</span>
+                    </a>
+                </li>
                 <li class="sidebar-item ${param.activePage == 'profile' ? 'active' : ''}">
                     <a href="${pageContext.request.contextPath}/user/profile">
-                        <span>Profile & Advice</span>
+                        <span>Profile</span>
                     </a>
                 </li>
             </ul>

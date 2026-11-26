@@ -47,3 +47,15 @@ CREATE TABLE IF NOT EXISTS feedback (
     status  VARCHAR(100) NOT NULL,
     date    DATE NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS advice_requests (
+    id         VARCHAR(30) PRIMARY KEY,
+    user_id    VARCHAR(30) NOT NULL,
+    advisor_id VARCHAR(30) NULL,
+    subject    VARCHAR(80) NOT NULL,
+    message    VARCHAR(300) NOT NULL,
+    status     VARCHAR(15) NOT NULL DEFAULT 'OPEN',
+    created_at DATE NOT NULL,
+    INDEX idx_adv_req_user (user_id),
+    INDEX idx_adv_req_advisor (advisor_id)
+);

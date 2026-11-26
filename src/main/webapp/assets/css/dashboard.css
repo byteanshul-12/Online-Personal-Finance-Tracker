@@ -364,6 +364,84 @@
     color: var(--text-muted);
 }
 
+/* --- AI Chat & Advice Center --- */
+.chat-window {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 320px;
+    overflow-y: auto;
+    padding: var(--space-2);
+    background-color: var(--bg-main);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-2);
+}
+
+.chat-bubble {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.chat-bubble.bot {
+    align-self: flex-start;
+    background-color: var(--bg-surface-secondary);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+}
+
+.chat-bubble.user {
+    align-self: flex-end;
+    background-color: var(--button-bg);
+    color: var(--button-text);
+}
+
+.chat-meta {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    font-family: var(--font-mono);
+}
+
+.chat-prompts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: var(--space-2);
+}
+
+.chat-chip {
+    background-color: var(--bg-input);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color var(--transition), color var(--transition), background-color var(--transition);
+}
+
+.chat-chip:hover {
+    border-color: var(--text-muted);
+    color: var(--text-primary);
+    background-color: var(--bg-hover);
+}
+
+.chat-input-row {
+    display: flex;
+    gap: 8px;
+}
+
+.chat-input-row .form-control {
+    flex: 1;
+}
+
 /* --- Footer --- */
 .app-footer {
     padding: var(--space-3) var(--space-4);
