@@ -70,6 +70,51 @@
                 </div>
             </div>
 
+            <!-- Interactive Expenditure Analytics Section -->
+            <section id="pf-expenditure-analytics"
+                     class="pf-charts-section"
+                     data-context-path="${pageContext.request.contextPath}">
+                <div class="pf-charts-header">
+                    <h2 class="pf-charts-title">Expenditure Analytics</h2>
+                    <div class="flex gap-2" role="group" aria-label="Trend Granularity">
+                        <button type="button" class="btn btn-primary btn-sm pf-toggle-btn pf-active" data-granularity="monthly">Monthly</button>
+                        <button type="button" class="btn btn-outline btn-sm pf-toggle-btn" data-granularity="daily">Last 30 Days</button>
+                    </div>
+                </div>
+
+                <div id="pf-chart-error" class="alert alert-error mb-4" style="display: none;" role="alert"></div>
+
+                <div class="pf-chart-grid">
+                    <!-- Category-Wise Expenditure Breakdown -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Category-Wise Breakdown</div>
+                        </div>
+                        <div class="pf-chart-canvas-wrap" id="pf-category-wrap" style="position: relative; height: 290px; width: 100%;">
+                            <canvas id="pfCategoryChart" aria-label="Category-wise expenditure breakdown chart"></canvas>
+                        </div>
+                        <div class="empty-state" id="pf-category-empty" style="display: none;">
+                            <div class="empty-state-title">No expenses recorded yet.</div>
+                            <div class="empty-state-text">Log an expense to view your category breakdown.</div>
+                        </div>
+                    </div>
+
+                    <!-- Expenditure Trend Over Time -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title" id="pf-trend-heading">Monthly Expenditure Trend</div>
+                        </div>
+                        <div class="pf-chart-canvas-wrap" id="pf-trend-wrap" style="position: relative; height: 290px; width: 100%;">
+                            <canvas id="pfTrendChart" aria-label="Expenditure trend over time chart"></canvas>
+                        </div>
+                        <div class="empty-state" id="pf-trend-empty" style="display: none;">
+                            <div class="empty-state-title">No expenditure records found.</div>
+                            <div class="empty-state-text">Spending trends will appear once expenses are logged for this period.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Dashboard Grid -->
             <div class="dashboard-grid">
                 
@@ -150,33 +195,9 @@
 
                 </div>
 
-                <!-- Right: Budget Status & Advisor Advice Feed -->
+                <!-- Right: Advisor Advice Feed -->
                 <div class="flex flex-column gap-4">
                     
-                    <!-- Budget Status Card -->
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">Budget Status</div>
-                        </div>
-
-                        <c:choose>
-                            <c:when test="${not empty activeBudget}">
-                                <p style="font-size: 0.85rem;" class="mb-2">
-                                    Spent <strong class="font-mono">₹${activeBudget.spent}</strong> of <strong class="font-mono">₹${activeBudget.amount}</strong>
-                                </p>
-                                <div class="progress-container">
-                                    <div class="progress-bar" style="width: ${activeBudget.percentage}%;"></div>
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <div class="empty-state">
-                                    <div class="empty-state-title">No budgets available.</div>
-                                    <div class="empty-state-text">Create a budget to start managing your spending limits.</div>
-                                </div>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
-
                     <!-- Advisor Guidance Feed -->
                     <div class="card">
                         <div class="card-header">
@@ -211,5 +232,9 @@
             <jsp:include page="../common/parallel-timeline.jsp"/>
 
         </div>
-<jsp:include page="../common/footer.jsp"/>
 
+<!-- Chart.js & Expenditure Analytics Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/expense-charts.js"></script>
+
+<jsp:include page="../common/footer.jsp"/>
