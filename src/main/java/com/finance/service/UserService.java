@@ -6,6 +6,7 @@ import com.finance.exception.DatabaseException;
 import com.finance.exception.ValidationException;
 import com.finance.model.User;
 import com.finance.util.IDGenerator;
+import com.finance.util.PasswordUtil;
 import com.finance.util.ValidationUtil;
 
 import java.util.List;
@@ -38,8 +39,14 @@ public class UserService {
         }
 
         User user = userDAO.findByEmail(email.trim());
-        if (user == null || !user.getPassword().equals(password)) {
+        if (user == null || !PasswordUtil.verify(password, user.getPassword())) {
             throw new AuthenticationException("Invalid email or password.");
+        }
+
+        if (!PasswordUtil.isHashed(user.getPassword())) {
+            String upgradedHash = PasswordUtil.hash(password);
+            userDAO.updatePassword(user.getId(), upgradedHash);
+            user.setPassword(upgradedHash);
         }
 
         return user;
@@ -72,7 +79,8 @@ public class UserService {
         }
 
         String userId = IDGenerator.generateId("USR");
-        User newUser = new User(userId, name.trim(), role.trim(), password, email.trim());
+        String hashedPassword = PasswordUtil.hash(password);
+        User newUser = new User(userId, name.trim(), role.trim(), hashedPassword, email.trim());
         
         boolean created = userDAO.createUser(newUser);
         if (!created) {
@@ -102,11 +110,11 @@ public class UserService {
         if (user == null) {
             throw new AuthenticationException("User account not found.");
         }
-        if (!user.getPassword().equals(oldPassword)) {
+        if (!PasswordUtil.verify(oldPassword, user.getPassword())) {
             throw new AuthenticationException("Current password is incorrect.");
         }
 
-        userDAO.updatePassword(userId, newPassword);
+        userDAO.updatePassword(userId, PasswordUtil.hash(newPassword));
     }
 
     /**

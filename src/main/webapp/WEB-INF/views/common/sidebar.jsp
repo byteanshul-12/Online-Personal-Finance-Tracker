@@ -101,6 +101,7 @@
     <ul class="sidebar-menu" style="margin-top: auto;">
         <li class="sidebar-item">
             <form method="post" action="${pageContext.request.contextPath}/logout" style="margin: 0; width: 100%;">
+                <input type="hidden" name="_csrf" value="${sessionScope.csrfToken}">
                 <button type="submit" style="background: none; border: none; width: 100%; text-align: left; padding: 8px 12px; color: var(--text-secondary); cursor: pointer; font-family: inherit; font-size: 0.85rem;">
                     Log out
                 </button>

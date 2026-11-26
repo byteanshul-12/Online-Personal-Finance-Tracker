@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="${sessionScope.csrfToken}">
     <title>${param.pageTitle != null ? param.pageTitle : 'Personal Finance Tracker'}</title>
 
     <!-- Global Design System -->

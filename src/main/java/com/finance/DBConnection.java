@@ -37,8 +37,11 @@ public class DBConnection {
             input.close();
 
             // Tomcat initialises DriverManager before the webapp loads, so drivers in
-            // WEB-INF/lib are not auto-discovered; register the MySQL driver explicitly.
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            // WEB-INF/lib are not auto-discovered; register the JDBC driver explicitly.
+            String driverClass = (URL != null && URL.startsWith("jdbc:h2:"))
+                    ? "org.h2.Driver"
+                    : "com.mysql.cj.jdbc.Driver";
+            Class.forName(driverClass);
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to load database configuration", e);

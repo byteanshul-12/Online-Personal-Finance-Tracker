@@ -106,7 +106,7 @@ CREATE TABLE `user` (
   `id` varchar(30) NOT NULL,
   `name` varchar(30) NOT NULL,
   `role` varchar(10) NOT NULL,
-  `password` varchar(16) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `email` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_user_email` (`email`),

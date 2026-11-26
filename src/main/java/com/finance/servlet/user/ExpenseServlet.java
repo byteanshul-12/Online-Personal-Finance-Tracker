@@ -1,19 +1,20 @@
 package com.finance.servlet.user;
 
+import java.io.IOException;
+import java.util.List;
+
 import com.finance.exception.DatabaseException;
 import com.finance.exception.ValidationException;
 import com.finance.model.Expense;
 import com.finance.model.User;
 import com.finance.service.ExpenseService;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import java.io.IOException;
-import java.util.List;
 
 /**
  * Controller servlet handling expense listing, creation, modification, and deletion.
@@ -107,4 +108,5 @@ public class ExpenseServlet extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/views/user/add-expense.jsp").forward(request, response);
         }
     }
+    
 }

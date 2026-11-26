@@ -57,6 +57,7 @@
                     </div>
 
                     <form id="aiChatForm" method="post" action="${pageContext.request.contextPath}/user/advice/ask-ai" class="chat-input-row">
+                        <input type="hidden" name="_csrf" id="aiCsrfToken" value="${sessionScope.csrfToken}">
                         <input type="text" id="aiPromptInput" name="prompt" class="form-control"
                                placeholder="Ask about your expenses, budgets, or savings..." maxlength="300" required>
                         <button type="submit" id="aiSendBtn" class="btn btn-primary">Ask AI</button>
@@ -71,6 +72,7 @@
                     </div>
 
                     <form method="post" action="${pageContext.request.contextPath}/user/advice/request-advisor">
+                        <input type="hidden" name="_csrf" value="${sessionScope.csrfToken}">
                         <div class="form-group">
                             <label for="advisor_id" class="form-label">Select Advisor (Optional)</label>
                             <select id="advisor_id" name="advisor_id" class="form-control">
@@ -222,7 +224,11 @@
         sendBtn.textContent = 'Thinking...';
 
         try {
-            const body = new URLSearchParams({ prompt: trimmed });
+            const csrfInput = document.getElementById('aiCsrfToken');
+            const body = new URLSearchParams({
+                prompt: trimmed,
+                _csrf: csrfInput ? csrfInput.value : ''
+            });
             const res = await fetch(form.action, {
                 method: 'POST',
                 headers: {

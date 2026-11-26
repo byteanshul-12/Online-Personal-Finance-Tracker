@@ -54,6 +54,7 @@
                                             </td>
                                             <td class="text-right">
                                                 <form method="post" action="${pageContext.request.contextPath}/admin/update-feedback-status" class="flex gap-1" style="justify-content: flex-end;">
+                                                    <input type="hidden" name="_csrf" value="${sessionScope.csrfToken}">
                                                     <input type="hidden" name="id" value="${fb.id}">
                                                     <select name="status" class="form-control btn-sm" style="width: 110px;">
                                                         <option value="PENDING" ${fb.status == 'PENDING' ? 'selected' : ''}>PENDING</option>
