@@ -78,6 +78,7 @@
     height: 6px;
     border-radius: 50%;
     background-color: var(--success);
+    box-shadow: 0 0 0 3px var(--success-bg);
 }
 
 .hero-title {
@@ -238,11 +239,14 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: var(--space-3);
-    transition: border-color var(--transition), background-color var(--transition);
+    transition: border-color var(--transition), background-color var(--transition), transform var(--transition), box-shadow var(--transition);
 }
 
 .feature-card:hover {
     border-color: var(--text-muted);
+    background-color: var(--bg-surface-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
 }
 
 .feature-icon {
@@ -256,6 +260,12 @@
     justify-content: center;
     color: var(--text-primary);
     margin-bottom: var(--space-2);
+    transition: border-color var(--transition), background-color var(--transition);
+}
+
+.feature-card:hover .feature-icon {
+    border-color: var(--text-muted);
+    background-color: var(--bg-hover);
 }
 
 .feature-icon svg {
@@ -286,6 +296,14 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: var(--space-3);
+    transition: border-color var(--transition), background-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.role-card:hover {
+    border-color: var(--text-muted);
+    background-color: var(--bg-surface-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
 }
 
 .role-card .role-pill {
